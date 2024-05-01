@@ -29,12 +29,7 @@ function page() {
    return <div>No Posts</div>
   }
 
-  const pushToPost = async(post : postType) =>{
-    await queryClient.invalidateQueries({queryKey : ["post"]})
-    await queryClient.invalidateQueries({queryKey : ["post-comments"] , exact : true})
-    dispatch(inPost(post.id))
-    router.push(`/posts/${post.id}`)
-  }
+ 
 
   console.log("data"  , data);
   
