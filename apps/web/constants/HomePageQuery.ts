@@ -1,5 +1,5 @@
 import axios from "axios"
-import { postType } from "../app/api/post/get-posts/route"
+import { postInterface, postType } from "../app/api/post/get-posts/route"
 
 export interface HomePageTask {
     story : taskStory 
@@ -24,7 +24,7 @@ export interface HomePageTask {
   
  interface ReturnTypeHomePage {
     message : string 
-    posts   : Array<postType>
+    posts   : Array<postInterface>
     tasks   : null | Array<HomePageTask>
  } 
 

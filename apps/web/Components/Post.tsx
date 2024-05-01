@@ -8,8 +8,9 @@ import { toggleLike  } from '../constants/PostQueryFN'
 function Post({postData} : {postData : postInterface}) {
   const router = useRouter()
   const queryClient = useQueryClient()
-  const [isLiked , setIsLiked] = useState(postData.isLiked)
   console.log("postData" , postData);
+  const [isLiked , setIsLiked] = useState(postData.isLiked)
+ 
   
 
   const pushToPost = async () => {

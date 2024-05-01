@@ -19,7 +19,7 @@ function HoemPage() {
     <main className=" flex flex-col gap-4">
       <SearchComponent />
       <div className=" flex flex-col gap-4">
-        {data?.posts.map((post) => <Post post={post}></Post>)}
+        {data?.posts.map((post) => <Post postData={post}></Post>)}
       </div>
     </main>
   );

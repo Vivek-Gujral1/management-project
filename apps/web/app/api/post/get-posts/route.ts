@@ -38,7 +38,7 @@ export interface postInterface {
   postLikes : number 
 }
 
-const checkIsLiked = async (postID : string , userID : string) => {
+export const checkIsLiked = async (postID : string , userID : string) => {
    const isLiked = await prisma.like.findFirst({
     where : {
       postID : postID ,
