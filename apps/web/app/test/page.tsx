@@ -1,9 +1,11 @@
 import React from 'react'
-import SearchComponent from '../../Components/SearchComponent'
+import Card from '../../Components/Card'
 
 function page() {
   return (
-    <main></main>
+   <main>
+    
+   </main>
   )
 }
 

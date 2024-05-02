@@ -5,6 +5,7 @@ export interface StoriesType {
    name : string ,
    socketRoomName : string  
    manager : user
+   avatar : string | null
 }
 interface user  {
    name : string 

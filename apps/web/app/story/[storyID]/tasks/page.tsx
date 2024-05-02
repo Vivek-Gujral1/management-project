@@ -7,7 +7,7 @@ import Task from '../../../../Components/Task'
 import { HomePageTask } from '../../../../constants/HomePageQuery'
 
 function page() {
-  const {sendTask} = useSocket()
+  const {sendTask , Tasks} = useSocket()
   const task : ITask = {
     content : "ya task hai" ,
     title : "task ka title" ,
@@ -25,15 +25,24 @@ function page() {
   }
 
   const taskClick = async() => {
-    const res  =  await sendTask("65f034890a6e1bc1676affd5_search karo" , task)
+    const res  =  await sendTask("65f034890a6e1bc1676affd5_org ki story" , task)
     console.log(res);
     
   }
+  console.log("tasks" , Tasks);
+  
   return (
-    // <button className=' text-white' onClick={taskClick}>Send Task</button>
-    <main>
-      <Task Task={task}></Task>
-    </main>
+    <>
+    <button className=' text-white' onClick={taskClick}>Send Task</button>
+     {
+         Tasks.map((task)=>(
+          <h1 className=' text-white'>{task.content}</h1>
+         ))
+     }
+     </>
+    // <main>
+    //   <Task Task={task}></Task>
+    // </main>
   )
 }
 

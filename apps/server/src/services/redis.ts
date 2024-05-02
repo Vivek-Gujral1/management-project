@@ -72,8 +72,10 @@ class RedisService {
                       } else if ('content' in parsedData && 'title' in parsedData && 'Manager' in parsedData && 'employee' in parsedData) {
                         // Object is of type Task
                         console.log("task hai");
+                        console.log("roomName" , roomName);
                         
-                        this.io.emit('task', parsedData as Task);
+                        
+                        this.io.emit('RecievedTask', parsedData as Task);
                       } else {
                         console.error('Received data does not match expected format.');
                       }
@@ -89,13 +91,7 @@ class RedisService {
             
     }
 
-    private isMessage(item : any) : item is message {
-       return  item.type === "message"
-    }
-
-    private isTask (item : any) : item is Task {
-        return item.type === "Task"
-    }
+   
 get pubLisher(){
     return this.pub
 }

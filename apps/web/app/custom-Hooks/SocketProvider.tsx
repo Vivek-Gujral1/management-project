@@ -46,6 +46,7 @@ interface IsocketContext {
   Messages: Array<message>;
   clearMessages: () => void; // Function to clear messages
   sendTask:(roomName:string,Task:ITask)=> Promise<boolean>;
+  Tasks : Array<ITask>
 }
 
 const socketContext = React.createContext<IsocketContext | null>(null);
@@ -59,6 +60,7 @@ export const useSocket = () => {
 export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
   const [Socket, setSocket] = useState<Socket>();
   const [Messages, setMessages] = useState<message[]>([]);
+  const [Tasks  , setTasks] = useState<ITask[]>([])
 
 
   const joinRoom = useCallback(
@@ -131,6 +133,8 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
       setMessages((prev) => [...prev, Message]);
 
       // console.log(Message);
+      // console.log( "socket Provider messages ",Messages);
+      
     },
     [Socket]
   );
@@ -138,11 +142,30 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
   const clearMessages : IsocketContext["clearMessages"] = useCallback(() => {
     setMessages([]); // Clearing messages array
   }, []);
+
+  // const clearTasks
+  
+  const onTaskRecievd = useCallback(
+    (Task: ITask) => {
+     
+      console.log(Math.ceil(Math.random()*1000));
+      
+      console.log("Task recieved from server", Task);
+
+      setTasks((prev) => [...prev, Task]);
+
+      // console.log(Message);
+      // console.log( "socket Provider messages ",Messages);
+      
+    },
+    [Socket]
+  );
   
 
   useEffect(() => {
     const _socket = io("http://localhost:3002");
     _socket.on("RecivedMessage", onMessageRec);
+    _socket.on("RecievedTask" , onTaskRecievd)
 
     setSocket(_socket);
 
@@ -153,7 +176,7 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
   }, []);
 
   return (
-    <socketContext.Provider value={{ sendMessage, joinRoom, Messages  , clearMessages ,sendTask}}>
+    <socketContext.Provider value={{ sendMessage, joinRoom, Messages  , clearMessages ,sendTask , Tasks}}>
       {children}
     </socketContext.Provider>
   );

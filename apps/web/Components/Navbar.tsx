@@ -7,6 +7,7 @@ import { navItem } from "../TypeScript-Types/types";
 import MenuOverlay from "./MenuOverlay";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
+import SearchComponent from "./SearchComponent";
 
 function Navbar  ()  {
     const [navbarOpen, setNavbarOpen] = useState(false);
@@ -23,8 +24,8 @@ function Navbar  ()  {
 
         const navitems : Array<navItem> = [
           {
-              title : "Search",
-              path : "/Search" ,
+              title : "Tasks",
+              path : "/task" ,
               active : true
           } ,
           {
@@ -64,6 +65,7 @@ function Navbar  ()  {
         >
          Pro-Perly
         </Link>
+        <SearchComponent />
         <div className="mobile-menu block md:hidden">
           {!navbarOpen ? (
             <button

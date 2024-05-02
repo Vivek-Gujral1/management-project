@@ -63,17 +63,17 @@ const ImageUploadComponent: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className=' lg:h-[500px]'>
      
       <form onSubmit={handleSubmit(onSubmit)} className=' flex flex-col gap-4'>
 
-      <div className="grid w-full max-w-sm items-center gap-1.5">
+      <div className="grid w-full max-w-sm items-center gap-1.5 ">
          <Label className=' text-white' htmlFor="picture">Add Image</Label>
          <Input type="file" accept="image/*" {...register('image')} onChange={handleImageChange} />
        </div>
        
      
-       <div className=' border border-white h-[200px] w-full'>
+       <div className=' lg:flex lg:flex-row lg:justify-center border border-white  h-[200px] lg:h-[300px] w-full lg:w-1/2 '>
        {previewImage && (
             <img
               src={previewImage} 
@@ -83,7 +83,9 @@ const ImageUploadComponent: React.FC = () => {
         
         )}
        </div>
-        <Button className=' bg-white' type="submit">{creating ? "Creating" : "Create"}</Button>
+       <div className=' '>
+       <Button className=' bg-white lg:w-1/3 ' type="submit">{creating ? "Creating" : "Create"}</Button>
+       </div>
       </form>
     </div>
   );

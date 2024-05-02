@@ -21,8 +21,6 @@ interface user {
   id: string;
 }
 
-
-
 class SocketService {
   private _io: Server;
   private redisPubSub: RedisService;

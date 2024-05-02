@@ -29,18 +29,18 @@ function Post({postData} : {postData : postInterface}) {
   }
 
   return (
-    <div  className=' h-[300px] w-full border border-white'>
+    <div  className=' h-[300px] w-full border border-white '>
         <div className=' h-1/6 flex flex-row justify-center gap-12  items-center'>
           <h2 className=' text-white text-lg'>  {postData.post.postOwner.name}</h2>
           <p className=' text-white'>18 Aprail 22:09</p>
              </div>
 
-           <div onClick={async()=> await pushToPost() } className=' h-2/3 w-full'>
+           <div  onClick={async()=> await pushToPost() } className=' cursor-pointer h-2/3 w-full'>
             <img src={postData.post.photo ? postData.post.photo : ""} alt="" className=' h-full w-full'  />
             </div> 
 
            <div className=' h-1/6 w-full flex flex-row justify-center gap-5  items-center' >
-            <p onClick={togglelike}  className=' text-white'>{isLiked ? "Liked" : "Like"}</p>
+            <p onClick={togglelike}  className=' text-white cursor-pointer'>{isLiked ? "Liked" : "Like"}</p>
             <p className=' text-white'>Comments</p>
             <p className=' text-white'>Share</p>
             </div>  

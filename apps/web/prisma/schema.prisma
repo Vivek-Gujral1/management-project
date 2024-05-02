@@ -14,6 +14,8 @@ model User {
   password        String
   avatar          String?
   coverImage      String? 
+  headline        String?
+  bio             String?
   orgOwnerID      String[]      @db.ObjectId
   org             Org[]         @relation(fields: [orgOwnerID], references: [id])
   createdAt       DateTime      @default(now())

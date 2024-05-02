@@ -32,6 +32,7 @@ function SearchComponent() {
      router.push("/Search")
    }
   }
+  
   return (
     <div className="flex w-full max-w-sm items-center space-x-2">
      <form onSubmit={handleSubmit(Search)} className='flex w-full max-w-sm items-center space-x-2'>

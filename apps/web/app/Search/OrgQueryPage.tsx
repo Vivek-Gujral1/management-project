@@ -6,12 +6,14 @@ import { useQuery } from '@tanstack/react-query'
 import { searchOrgs, searchedItems } from '../../constants/SearchQueryFn'
 import { Avatar } from '@mui/material'
 import { useRouter } from 'next/navigation'
+import OrgSearchCard from '../../Components/OrgSearchCard'
+import SearchComponent from '../../Components/SearchComponent'
 
 function OrgQueryPage() {
     const query = useSelector((state : RootState)=> state.query.query)
     const router = useRouter()
     if (!query){
-     return <div> Something went worng</div>
+     return <h1>Something Went Wrong</h1>
     }
     const {data : orgs, isLoading} = useQuery({
         queryKey : ["search/orgs"] ,
@@ -29,13 +31,9 @@ function OrgQueryPage() {
   return (
     <div>
          {orgs?.status ? 
-          <div>
+          <div className=' flex flex-col gap-4 mt-5 lg:grid lg:grid-cols-2 lg:gap-3'>
             {orgs.orgs.map((org)=>(
-                <>
-                <Avatar key={org.avatar} src={org.avatar ? org.avatar : ""}></Avatar>
-                <h1 key={org.name}>{org.name}</h1>
-                <button onClick={()=> visitOrg(org)}> visit</button>
-                </>
+                <OrgSearchCard Details={org} />
             ))}
           </div>
          : <div> 

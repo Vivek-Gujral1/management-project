@@ -9,15 +9,24 @@ import { useRouter } from 'next/navigation'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../store/store'
 import { storyID } from '../store/storyID/storyIDSlice'
-
+import { useSocket } from '../app/custom-Hooks/SocketProvider'
 
 function Story({story} : {story : StoriesType}) {
    const router = useRouter()
    const dispatch : AppDispatch = useDispatch()
+   const {joinRoom} = useSocket()
 
-   const viewStory = () => {
-    dispatch(storyID(story.id))
-    router.push(`/story/${story.id}`)
+   const RoomJoin = async() => {
+     const res =  await joinRoom(story.socketRoomName)
+     return res
+   }
+
+   const viewStory = async () => {
+    const res =  await RoomJoin()
+     if (res) {
+      dispatch(storyID(story.id))
+      router.push(`/story/${story.id}`)
+     }
    }
   return (
     <div className=' h-[300px] w-full border border-white flex flex-col gap-3 bg-slate-200 lg:h-[220px]'>

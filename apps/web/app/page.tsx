@@ -17,8 +17,8 @@ function HoemPage() {
 
   return (
     <main className=" flex flex-col gap-4">
-      <SearchComponent />
-      <div className=" flex flex-col gap-4">
+  
+      <div className=" flex flex-col gap-4 lg:grid lg:grid-cols-3 lg:gap-5">
         {data?.posts.map((post) => <Post postData={post}></Post>)}
       </div>
     </main>

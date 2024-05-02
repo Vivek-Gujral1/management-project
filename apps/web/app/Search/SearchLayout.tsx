@@ -4,6 +4,8 @@ import React , {useState} from "react";
 import {useForm} from "react-hook-form"
 import UserQueryPage from "./UserQueryPage";
 import OrgQueryPage from "./OrgQueryPage";
+import SearchComponent from "../../Components/SearchComponent";
+import { Button } from "../../@/components/ui/button";
 
 interface FormValues {
     users : boolean;
@@ -11,18 +13,12 @@ interface FormValues {
   }
 
 function SearchLayout() {
-    // const {register , setValue  , watch} = useForm<FormValues>({
-    //     defaultValues : {
-    //        users : true ,
-    //        orgs : false
-    //     }
-    // })
+  
 
     const [users , setUsers] = useState<boolean>(true)
     const [orgs , setOrgs] = useState<boolean>(false)
    
-    // const users = watch("users")
-    // const orgs = watch("orgs")
+
 
     const handleCheckboxChange = (name: keyof FormValues) => {
         if (name === 'users' && !users) {
@@ -35,24 +31,18 @@ function SearchLayout() {
       };
   return (
     <>
-    <div className=" flex flex-row gap-24">
-       
-        {/* <div className=" flex flex-row gap-3">
-        <label htmlFor="user">user</label>
-        <input type="checkbox" id="user" {...register("users")} onChange={() => handleCheckboxChange('users')} checked={users}  />
-      </div>
+    <div className=" flex flex-row justify-center items-center gap-8">
+      
 
-      <div className=" flex flex-row gap-3">
-        <label htmlFor="orgs" >orgs</label>
-        <input type="checkbox" id="orgs" {...register("orgs")} checked={orgs} onChange={() => handleCheckboxChange('orgs')}  /> */}
-
-        <button onClick={()=> handleCheckboxChange("users")}>users</button>
-        <button onClick={()=> handleCheckboxChange("orgs")}>orgs</button>
+        <Button className={ `text-white ${users ? "bg-blue-500" : ""} ` }  onClick={()=> handleCheckboxChange("users")}>User</Button>
+        <Button className={ `text-white ${orgs ? "bg-blue-500" : ""} ` } onClick={()=> handleCheckboxChange("orgs")}>Organisation</Button>
       </div>
       
       <div>
+       
         {users && <div> <UserQueryPage /> </div>}
         {orgs && <div> <OrgQueryPage /> </div>}
+        {!users && !orgs && <SearchComponent />}
       </div>
       </>
     

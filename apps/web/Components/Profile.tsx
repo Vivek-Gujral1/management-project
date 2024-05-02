@@ -20,17 +20,32 @@ import { getSession, useSession } from 'next-auth/react';
 import React from 'react';
 import { AiOutlineUpload } from 'react-icons/ai';
 import { useRouter } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
+import { getUser } from '../constants/UserQueryFn';
 
 
-const ProfilePage = () => {
+const ProfilePage = ({userID} : {userID : string}) => {
   const router = useRouter()
-    const session  = useSession()
-    if (!session  ) {
-        return <div>Please Login</div>
+    // const session  = useSession()
+    // if (!session  ) {
+    //     return <div>Please Login</div>
+    // }
+    // const user = session.data?.user
+    // if (!user) {
+    //     return <div>user nahi hai</div>
+    // }
+    console.log("userID" , userID);
+    
+
+    const {data : user , isLoading} = useQuery({
+      queryKey : ["profile/user"],
+      queryFn : async() => await getUser(userID)
+    })
+    if (isLoading) {
+      return <div className=' text-white'>Loading</div>
     }
-    const user = session.data?.user
     if (!user) {
-        return <div>user nahi hai</div>
+     return <div className=' text-white'>Something Went Wrong</div>
     }
 
     const onAvatarUpload = () => {

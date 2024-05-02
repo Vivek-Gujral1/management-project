@@ -5,6 +5,8 @@ import { searchOrgs, searchUser } from '../../constants/SearchQueryFn'
 import { Avatar } from '@mui/material'
 import {  RootState } from '../../store/store'
 import {  useSelector } from 'react-redux'
+import Card from '../../Components/Card'
+import SearchComponent from '../../Components/SearchComponent'
 
 interface params {
     query : string
@@ -12,7 +14,7 @@ interface params {
 function UserQueryPage() {
    const query = useSelector((state : RootState)=> state.query.query)
    if (!query){
-    return <div> Something went worng</div>
+    return <h1 className='Something Went wrong'></h1>
    }
     const {data , isLoading} = useQuery({
         queryKey : ["search/user"] ,
@@ -25,12 +27,9 @@ function UserQueryPage() {
   return (
     <div>
       {data?.status ? 
-        <div>
+        <div className=' flex flex-col gap-4 mt-5 lg:grid lg:grid-cols-2 lg:gap-3'>
         {data.users.map((user)=>(
-        <>
-            <Avatar src={user.avatar ? user.avatar : ""}></Avatar>
-            <h1>{user.name}</h1>
-            </>
+       <Card Details={user} />
             
         ))}
        </div>
