@@ -3,6 +3,8 @@ import React from 'react'
 import { useSocket } from '../../../custom-Hooks/SocketProvider'
 import { ITask } from '../../../custom-Hooks/SocketProvider'
 import { button } from '@nextui-org/react'
+import Task from '../../../../Components/Task'
+import { HomePageTask } from '../../../../constants/HomePageQuery'
 
 function page() {
   const {sendTask} = useSocket()
@@ -28,7 +30,10 @@ function page() {
     
   }
   return (
-    <button className=' text-white' onClick={taskClick}>Send Task</button>
+    // <button className=' text-white' onClick={taskClick}>Send Task</button>
+    <main>
+      <Task Task={task}></Task>
+    </main>
   )
 }
 

@@ -13,7 +13,7 @@ interface ImageFormData {
   image: FileList; 
 }
 
-const ImageUploadComponent: React.FC = () => {
+const ImageUploadComponent = ({userID} : {userID : string}) => {
   const { register, handleSubmit  } = useForm<ImageFormData>(); 
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -41,10 +41,10 @@ const ImageUploadComponent: React.FC = () => {
       }
 
       const formData = new FormData();
-      formData.append('post', imageFile); // Append the image file to FormData
+      formData.append('avatar', imageFile); // Append the image file to FormData
       
       const res = await axios.post(
-        `/api/post/create-post?orgID=65fba7ef90dfb092289923fd`,
+        `/api/user/upload-avatar?userID=${userID}`,
         formData,
         {
           headers: {
@@ -73,7 +73,7 @@ const ImageUploadComponent: React.FC = () => {
        </div>
        
      
-       <div className=' border border-white h-[200px] w-full'>
+       <div className=' border border-white h-[200px] w-full rounded-full'>
        {previewImage && (
             <img
               src={previewImage} 

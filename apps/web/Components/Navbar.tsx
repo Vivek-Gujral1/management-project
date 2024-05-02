@@ -44,7 +44,7 @@ function Navbar  ()  {
           } ,
           {
             title : "Profile" ,
-            path : "/profile" ,
+            path : "/Profile" ,
             active : isAuthenticate
           } ,
           {

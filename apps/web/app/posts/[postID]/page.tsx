@@ -1,19 +1,8 @@
 "use client"
-import React , {useEffect} from 'react'
+import React  from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { getPost } from '../../../constants/PostQueryFN'
-// import { Avatar ,AvatarFallback , AvatarImage } from '../../../@/components/ui/avatar'
-import { Avatar } from '@mui/material'
 
-import AddComment from './AddComment'
-import { AiFillLike } from "react-icons/ai";
-import Like from './Like'
-import { AppDispatch } from '../../../store/store'
-import { useDispatch } from 'react-redux'
-import { useRouter } from 'next/navigation'
-import { postType } from '../../api/post/get-posts/route'
-import { inPost } from '../../../store/postSlice/postslice'
-import { Button } from '../../../@/components/ui/button'
 import Post from '../../../Components/Post'
 
 interface parmas {
@@ -21,8 +10,7 @@ interface parmas {
 }
 
 function page({params} : {params : parmas}) {
-  const dispatch:AppDispatch =useDispatch()
-  const router = useRouter()
+
   
 
   const {data : postData , isLoading} = useQuery({

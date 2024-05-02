@@ -2,20 +2,13 @@
 import React from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { getPosts } from '../../constants/PostQueryFN'
-import {Card, CardBody, CardFooter, Image} from "@nextui-org/react";
 import { useRouter } from 'next/navigation';
-import { useQueryClient } from '@tanstack/react-query';
-import { postType } from '../api/post/get-posts/route'
-import { AppDispatch } from '../../store/store';
-import { useDispatch } from 'react-redux';
-import { inPost } from '../../store/postSlice/postslice';
 import Post from '../../Components/Post';
 import { Button } from '../../@/components/ui/button';
 
 function page() {
   const router = useRouter()
-  const queryClient = useQueryClient()
-  const dispatch : AppDispatch = useDispatch()
+
   const {data  , isLoading} = useQuery({
     queryKey : ["posts"] ,
     queryFn : async () => await getPosts()

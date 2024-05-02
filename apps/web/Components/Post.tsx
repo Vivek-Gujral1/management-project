@@ -31,7 +31,7 @@ function Post({postData} : {postData : postInterface}) {
   return (
     <div  className=' h-[300px] w-full border border-white'>
         <div className=' h-1/6 flex flex-row justify-center gap-12  items-center'>
-          <h2 className=' text-white'>  {postData.post.postOwner.name}</h2>
+          <h2 className=' text-white text-lg'>  {postData.post.postOwner.name}</h2>
           <p className=' text-white'>18 Aprail 22:09</p>
              </div>
 

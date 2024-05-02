@@ -1,9 +1,12 @@
 import React from 'react'
+import Profile from '../../Components/Profile'
 
-function Profile() {
+function ProfilePage() {
   return (
-    <div>Profile</div>
+   <main>
+    <Profile ></Profile>
+   </main>
   )
 }
 
-export default Profile
+export default ProfilePage
