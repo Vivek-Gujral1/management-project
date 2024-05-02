@@ -42,7 +42,7 @@ export async function GET(req : NextRequest) {
         } ,
         name : true ,
         createdAt : true ,
-        
+        avatar : true
        }
     })
 

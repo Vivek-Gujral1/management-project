@@ -45,10 +45,12 @@ model Story {
   name           String
   socketRoomName String   @unique
   managerId      String?  @db.ObjectId
+  avatar         String?
   manager        User?    @relation("storymanger", fields: [managerId], references: [id])
   employeeID     String[] @db.ObjectId
   employees      User[]   @relation(fields: [employeeID], references: [id])
   Tasks          Task[]
+  headline       String?
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 

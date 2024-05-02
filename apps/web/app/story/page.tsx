@@ -34,21 +34,21 @@ function page() {
          }
     }
   return (
-    <div>
-        {
-            data?.map((story)=>(
-                <div>
-                    <h1  onClick={() => pushToStory(story) } className=' text-white cursor-pointer'>{story.name}</h1>
-                </div>
-            ))
-        }
-    </div>
+    // <div>
+    //     {
+    //         data?.map((story)=>(
+    //             <div>
+    //                 <h1  onClick={() => pushToStory(story) } className=' text-white cursor-pointer'>{story.name}</h1>
+    //             </div>
+    //         ))
+    //     }
+    // </div>
 
-    // <main className=' flex flex-col gap-5'>
-    //   {data?.map((story)=>(
-    //     <Story story={story} />
-    //   ))}
-    // </main>
+    <main className=' flex flex-col gap-5'>
+      {data?.map((story)=>(
+        <Story story={story} />
+      ))}
+    </main>
 
   )
 }
