@@ -75,14 +75,14 @@ class RedisService {
                         console.log("roomName" , roomName);
                         
                         
-                        this.io.emit('RecievedTask', parsedData as Task);
+                        this.io.emit('RecivedMessage', parsedData as Task);
                       } else {
                         console.error('Received data does not match expected format.');
                       }
                   
                     
                     
-                    //
+                    
                    
                     
                 }

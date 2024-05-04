@@ -5,11 +5,12 @@ export interface StoriesType {
    name : string ,
    socketRoomName : string  
    manager : user
-   avatar : string | null
+   bio : string 
 }
 interface user  {
    name : string 
    avatar : string | null
+   id : string 
 }
 
 interface getStories {
@@ -19,10 +20,11 @@ interface getStories {
 
 export interface StoryType {
    employees : Array<user>
-   manager   : Array<user>
+   manager   : user
    name   : string
    createdAt : Date
   org  : Array<org>
+  bio  : string
 }
 interface org {
 

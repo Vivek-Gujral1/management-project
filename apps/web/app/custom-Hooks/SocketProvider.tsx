@@ -125,15 +125,29 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
   );
 
   const onMessageRec = useCallback(
-    (Message: message) => {
+    (Message: message | ITask) => {
      
       
       console.log("Message recieved from server", Message);
 
-      setMessages((prev) => [...prev, Message]);
+      
 
       // console.log(Message);
       // console.log( "socket Provider messages ",Messages);
+
+      if ('content' in Message && 'sender' in Message && 'roomName' in Message) {
+        console.log("message hai");
+        
+        // Object is of type Message
+        // this.io.emit('message', parsedData as message);
+        setMessages((prev) => [...prev, Message]);
+      } else if ('content' in Message && 'title' in Message && 'Manager' in Message && 'employee' in Message) {
+        // Object is of type Task
+        console.log("task hai");
+        setTasks((prev) => [...prev, Message]);
+      } else {
+        console.error('Received data does not match expected format.');
+      }
       
     },
     [Socket]
@@ -152,7 +166,7 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
       
       console.log("Task recieved from server", Task);
 
-      setTasks((prev) => [...prev, Task]);
+    
 
       // console.log(Message);
       // console.log( "socket Provider messages ",Messages);
@@ -165,7 +179,7 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
   useEffect(() => {
     const _socket = io("http://localhost:3002");
     _socket.on("RecivedMessage", onMessageRec);
-    _socket.on("RecievedTask" , onTaskRecievd)
+    // _socket.on("RecievedTask" , onTaskRecievd)
 
     setSocket(_socket);
 

@@ -39,7 +39,7 @@ export async function GET(req : NextRequest) {
                 avatar : true
             }
         } ,
-        avatar : true
+        bio : true
     }
    })
 

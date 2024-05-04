@@ -23,26 +23,28 @@ export async function GET(req : NextRequest) {
         employees : {
             select : {
                 name : true ,
-                avatar : true
+                avatar : true ,
+                id : true
             }
         } ,
         manager : {
             select : {
                 avatar : true ,
-                name : true 
+                name : true ,
+                id : true
             }
         } ,
         org : {
             select : {
                 name : true ,
                 email : true ,
-                avatar : true ,
+                bio : true ,
 
             }
         } ,
         name : true ,
         createdAt : true ,
-        avatar : true
+        bio : true
        }
     })
 

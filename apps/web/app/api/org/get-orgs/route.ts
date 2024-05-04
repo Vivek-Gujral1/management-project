@@ -64,14 +64,14 @@ export async function GET(req: NextRequest) {
       OR : [
         {
           owner : {
-            every : {
+            some : {
               id : user.id
             }
           }
         } ,
         {
           employees : {
-            every : {
+            some : {
               id : user.id
             }
           }
@@ -91,7 +91,8 @@ export async function GET(req: NextRequest) {
   });
 
   
-
+ console.log(orgs);
+ 
   if (!orgs) {
     return NextResponse.json({
       message: "user not yet created Org",

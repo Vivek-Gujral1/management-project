@@ -22,48 +22,44 @@ import { AiOutlineUpload } from 'react-icons/ai';
 import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { getUser } from '../constants/UserQueryFn';
+import Post from './Post';
+import { Button } from '../@/components/ui/button';
+import Org from './Org';
 
 
 const ProfilePage = ({userID} : {userID : string}) => {
   const router = useRouter()
-    // const session  = useSession()
-    // if (!session  ) {
-    //     return <div>Please Login</div>
-    // }
-    // const user = session.data?.user
-    // if (!user) {
-    //     return <div>user nahi hai</div>
-    // }
+    
     console.log("userID" , userID);
     
 
-    const {data : user , isLoading} = useQuery({
+    const {data  , isLoading} = useQuery({
       queryKey : ["profile/user"],
       queryFn : async() => await getUser(userID)
     })
     if (isLoading) {
       return <div className=' text-white'>Loading</div>
     }
-    if (!user) {
+    if (!data) {
      return <div className=' text-white'>Something Went Wrong</div>
     }
 
     const onAvatarUpload = () => {
-      router.push(`/Profile/upload-avatar/${user.id}`)
+      router.push(`/Profile/upload-avatar/${data.user.id}`)
     } 
     
     const onCoverImageUpload = () => {
       router.push(`/Profile/upload-cover-image`)
     }
 
-    console.log("session user " , user);
+    
     
 
     return (
-      <div className="max-w-3xl mx-auto p-8 bg-white rounded-xl shadow-md overflow-hidden">
+      <div className="w-full mx-auto   rounded-xl shadow-md overflow-hidden">
       <div className="bg-gray-200 rounded-t-lg overflow-hidden">
-        {user.coverImage ? (
-          <img src={user.coverImage} alt="Cover" className="w-full h-64 object-cover" />
+        {data.user.coverImage ? (
+          <img src={data.user.coverImage} alt="Cover" className="w-full h-64 object-cover" />
         ) : (
           <div className="flex justify-center items-center h-64">
             <button
@@ -78,8 +74,8 @@ const ProfilePage = ({userID} : {userID : string}) => {
       </div>
       <div className="p-6">
         <div className="flex items-center">
-          {user.avatar ? (
-            <img src={user.avatar} alt="Avatar" className="w-20 h-20 rounded-full" />
+          {data.user.avatar ? (
+            <img src={data.user.avatar} alt="Avatar" className="w-20 h-20 rounded-full" />
           ) : (
             <div className="w-20 h-20 bg-gray-300 rounded-full flex justify-center items-center">
               <button className="text-gray-600" onClick={onAvatarUpload}>
@@ -88,13 +84,30 @@ const ProfilePage = ({userID} : {userID : string}) => {
             </div>
           )}
           <div className="ml-4">
-            <h2 className="text-2xl font-semibold">{user.name}</h2>
-            <p className="text-gray-600">{user.email}</p>
+            <h2 className="text-2xl text-white font-semibold">{data.user.name}</h2>
+            <p className="text-gray-400">{data.user.email}</p>
           </div>
         </div>
-        <p className="text-lg text-gray-700 mt-4">shfikahfgkhgsfh</p>
-        <p className="text-gray-600 mt-2">hfrlsgh,rshgkjgnehtlcxmngjdfgl,msfgojf;gjhu</p>
+        <p className="text-lg text-gray-200 mt-4 ">shfikahfgkhgsfh</p>
+       
       </div>
+
+      <div className=' flex flex-col gap-3 '>
+       {data.userOrgs?.map((org)=>(
+        <Org org={org} />
+       ))}
+       <Button className=' bg-blue-500 lg:w-1/6'>Show More</Button>
+      </div>
+
+      <div className=' lg:grid lg:grid-cols-2 lg:gap-3 flex flex-col gap-3 mt-5'>
+        
+        {data.posts?.map((post)=>(
+          <Post postData={post} ></Post>
+        ))}
+  <Button className=' bg-blue-500 lg:w-1/3 '>Show More</Button>
+      </div>
+
+      
     </div>
     );
 };

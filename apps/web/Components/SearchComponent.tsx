@@ -29,6 +29,7 @@ function SearchComponent() {
      await queryClient.invalidateQueries({queryKey : ["search/orgs"]})
      await queryClient.invalidateQueries({queryKey : ["search/user"]})
      dispatch(inQuery(searchQuery))
+     reset()
      router.push("/Search")
    }
   }

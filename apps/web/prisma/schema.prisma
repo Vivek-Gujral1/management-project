@@ -47,7 +47,7 @@ model Story {
   name           String
   socketRoomName String   @unique
   managerId      String?  @db.ObjectId
-  avatar         String?
+  bio         String?
   manager        User?    @relation("storymanger", fields: [managerId], references: [id])
   employeeID     String[] @db.ObjectId
   employees      User[]   @relation(fields: [employeeID], references: [id])
