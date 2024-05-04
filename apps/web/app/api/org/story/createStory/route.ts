@@ -6,7 +6,7 @@ import { ApiError } from "../../../../../utility/ApiError";
 
 export async function POST(req: NextRequest) {
   const reqBody = await req.json();
-  const { name }: { name: string } = reqBody;
+  const { name  , headline }: { name: string , headline : string } = reqBody;
   const SearchParams = req.nextUrl.searchParams;
   const orgID = SearchParams.get("orgId");
   
@@ -51,6 +51,7 @@ export async function POST(req: NextRequest) {
     data: {
       name: name,
       socketRoomName: storyRoomName,
+      headline : headline ,
       manager: {
         connect: {
           id: user.id,
@@ -78,6 +79,8 @@ export async function POST(req: NextRequest) {
     throw new ApiError(500, "Something went wrong while making Story");
   }
 
+  console.log(createdStory);
+  
   return NextResponse.json({
     story: newStory,
   });

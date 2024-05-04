@@ -61,3 +61,10 @@ export type TupdateSchema = z.infer<typeof updateOrgSchema>
  })
 
  export type TupdateCoverImage = z.infer<typeof updateCoverImageSchema>
+ 
+ export const createStorySchema = z.object({
+    name:z.string().min(3,"your Storyname is to short ").max(40,"your Storyname is to long") ,
+    headline : z.string() .min(3,"headline is to short") .max(120,"headline is too long")
+ })
+
+ export type TcreateStorySchema = z.infer<typeof createStorySchema>

@@ -104,7 +104,7 @@ const ProfilePage = ({userID} : {userID : string}) => {
         {data.posts?.map((post)=>(
           <Post postData={post} ></Post>
         ))}
-  <Button className=' bg-blue-500 lg:w-1/3 '>Show More</Button>
+          <Button className=' bg-blue-500 lg:w-1/3 '>Show More</Button>
       </div>
 
       

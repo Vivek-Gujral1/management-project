@@ -43,6 +43,7 @@ export async function POST(req: NextRequest) {
   if (!verfiyUserToUpdate) {
     throw new ApiError(400, "You have no access to update this org");
   }
+  
   const reqBody = await req.json();
   const { name, bio , email, headline }: IreqBody = reqBody;
  let socketRoomName : string = ""  ;
@@ -68,5 +69,6 @@ export async function POST(req: NextRequest) {
     message : "org intro updated",
     updateOrg : updateOrg ,
     success : true
+    
   })
 }

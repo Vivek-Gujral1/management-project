@@ -1,4 +1,5 @@
 import axios from "axios"
+import { TcreateStorySchema } from "./zodTypes"
 
 export interface StoriesType {
    id : string ,
@@ -38,6 +39,7 @@ interface ReturnTypeGetStory {
    story : StoryType
 }
 
+
 export const getStory = async(storyId : string) => {
    const {data} : {data : ReturnTypeGetStory}=  await axios.get(`/api/org/story/get-story?storyID=${storyId}`)
   console.log(data);
@@ -61,4 +63,9 @@ export const getTasks = async (storyID : string) => {
 export const getStories = async () => {
    const {data} : {data : getStories} = await axios.get(`/api/org/story/org-stories`)
    return data.stories
+}
+
+export const createStory = async(orgId:string,comingdata:TcreateStorySchema)=>{
+   const {data} = await axios.post(`/api/org/story/createStory?orgId=${orgId}`,comingdata)
+   return data
 }

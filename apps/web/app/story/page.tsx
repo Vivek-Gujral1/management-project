@@ -19,9 +19,11 @@ function page() {
 
   return (
 
-   
-     <main className="flex flex-col gap-5 mt-6">
+   <main>
+    <Button onClick={()=> router.push("/story/create-story/select-org")} className=" bg-white text-xl" >Create Story</Button>
+     <div className="flex flex-col gap-5 mt-6">
      {data?.map((story) => <Story story={story} />)}
+     </div>
      </main>
    
   );

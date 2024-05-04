@@ -1,5 +1,6 @@
 "use client"
 import React from 'react'
+import CheckboxPage from '../../../Components/CheckBox'
 
 
 
@@ -7,7 +8,7 @@ import React from 'react'
 function CreateStory() {
   return (
     <div>
-     
+     <CheckboxPage />
     </div>
   )
 }
