@@ -49,6 +49,11 @@ function Navbar  ()  {
             title : "SignIn" ,
             path  : "/users/auth/login" ,
             active : !isAuthenticate
+          } ,
+          {
+            title : "Notifications" ,
+            path : "/notifications" ,
+            active : isAuthenticate
           }
       ]
       

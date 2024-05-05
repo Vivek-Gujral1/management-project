@@ -35,7 +35,7 @@ model User {
   likes           like[]
    messages        Message[]
    notificationREcivers  Notification[]
-   
+   notificatonSenders  Notification[] @relation("sender")
   @@map("users")
 }
 
@@ -176,6 +176,8 @@ model Message {
 
 model Notification {
   id  String @id @default(auto()) @map("_id") @db.ObjectId
+  senderID String @db.ObjectId
+  sender   User @relation( "sender",fields: [senderID] , references: [id])
   recieverID String @db.ObjectId
   reciever User @relation(fields: [recieverID] , references: [id])
   content String

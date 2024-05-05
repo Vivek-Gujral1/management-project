@@ -96,7 +96,7 @@ const ProfilePage = ({userID} : {userID : string}) => {
        {data.userOrgs?.map((org)=>(
         <Org org={org} />
        ))}
-       <Button className=' bg-blue-500 lg:w-1/6'>Show More</Button>
+       <Button onClick={()=> router.push("/org")} className=' bg-blue-500 lg:w-1/6'>Show More</Button>
       </div>
 
       <div className=' lg:grid lg:grid-cols-2 lg:gap-3 flex flex-col gap-3 mt-5'>

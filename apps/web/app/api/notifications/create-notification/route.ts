@@ -1,12 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ApiError } from "../../../../utility/ApiError";
 import prisma from "../../../../constants/prisma";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../../auth/[...nextauth]/route";
 
 interface reqBody {
     content : string
 }
 
 export async function POST(req : NextRequest) {
+
+    const session = await getServerSession(authOptions)
+    if (!session) {
+        throw new ApiError(400 , "you cannot send Notification")
+    }
+
+    const user = session.user
     const reqBody : reqBody = await req.json()
     const {content} = reqBody
 
@@ -22,6 +31,9 @@ export async function POST(req : NextRequest) {
     }
     if (recieverID.trim() === "") {
         throw new ApiError(400 , "recieverId is empty")
+    }
+    if (user.id === recieverID) {
+        throw new ApiError(400  , "user cannot send a notification to himself")
     }
     const reciever = await prisma.user.findFirst({
         where : {
@@ -39,6 +51,11 @@ export async function POST(req : NextRequest) {
             reciever : {
                 connect : {
                     id : reciever.id
+                }
+            } ,
+            sender : {
+                connect : {
+                    id : user.id
                 }
             }
         }

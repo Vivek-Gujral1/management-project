@@ -15,6 +15,7 @@ import axios from "axios";
 import { TupdateCoverImage, updateCoverImageSchema } from "../../../constants/zodTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { log } from "console";
+import { useRouter } from "next/navigation";
 
 
 interface ParamsType {
@@ -26,6 +27,7 @@ export interface Idata {
 
 function Orgg({ params }: { params: ParamsType }) {
   const session = useSession();
+  const router = useRouter()
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewURL, setPreviewURL] = useState<string | null>(null);
   const queryClient  = useQueryClient()
@@ -68,7 +70,7 @@ function Orgg({ params }: { params: ParamsType }) {
 
   const file = data.coverImage[0]
 
-  await updateCoverimage(file)
+  await updateCoverimage()
     
     
   }
@@ -137,7 +139,7 @@ function Orgg({ params }: { params: ParamsType }) {
               {org?.employeeID.length} people working
             </Link>
             {org.ownerID.includes(user.id) ? (
-              <button>Add Employee</button>
+              <button >Add Employee</button>
             ) : null}
             <div className=" h-96 w-4/5  mt-8 flex overflow-x-auto gap-3">
               {org.posts.map((post) => (

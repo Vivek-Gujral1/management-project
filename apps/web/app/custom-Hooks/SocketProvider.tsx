@@ -10,6 +10,8 @@ import React, {
 } from "react";
 import { io, Socket } from "socket.io-client";
 import axios from "axios";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 interface SocketProviderProps {
   children?: React.ReactNode;
@@ -38,6 +40,23 @@ export interface ITask{
   title:string
 }
 
+export interface INotification {
+  content : string 
+  sender  : user
+  reciever : user
+}
+
+interface NotificationOrg {
+  id : string 
+  name : string 
+  avatar : string | null
+}
+
+export interface AddEmployeeAcceptNotification extends INotification {
+ org : NotificationOrg
+ 
+}
+
 
 
 interface IsocketContext {
@@ -47,6 +66,8 @@ interface IsocketContext {
   clearMessages: () => void; // Function to clear messages
   sendTask:(roomName:string,Task:ITask)=> Promise<boolean>;
   Tasks : Array<ITask>
+  notifications : Array<INotification>
+  sendNotifications:(roomName : string , Notification : INotification) => Promise<boolean>
 }
 
 const socketContext = React.createContext<IsocketContext | null>(null);
@@ -61,11 +82,15 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
   const [Socket, setSocket] = useState<Socket>();
   const [Messages, setMessages] = useState<message[]>([]);
   const [Tasks  , setTasks] = useState<ITask[]>([])
-
+  const [notifications , setNotifications] = useState<INotification[]>([])
+  const userData = useSelector((state : RootState)=> state.auth.userData)
+  
 
   const joinRoom = useCallback(
     async (roomName: string) => {
       if (Socket === undefined) {
+        console.log("Socket Undefined");
+        
         return false;
       }
 
@@ -124,8 +149,31 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
     [Socket]
   );
 
+  const sendNotifications: IsocketContext["sendNotifications"] = useCallback(
+    async (roomName: string, Notification: INotification) => {
+      const res: RoomAcknowledgeMent = await Socket?.emitWithAck(
+        "sendNotification",
+        roomName,
+        Notification
+      );
+
+      console.log("Notification res ", res );
+
+      if (res.status === false) {
+        return false;
+      }
+      const create = await axios.post(`/api/notifications/create-notification?recieverID=${Notification.reciever.id}` , {
+                content : Notification.content
+              })
+      console.log(create);
+
+      return true;
+    },
+    [Socket]
+  );
+
   const onMessageRec = useCallback(
-    (Message: message | ITask) => {
+    (Message: message | ITask | INotification) => {
      
       
       console.log("Message recieved from server", Message);
@@ -145,7 +193,12 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
         // Object is of type Task
         console.log("task hai");
         setTasks((prev) => [...prev, Message]);
-      } else {
+      } 
+      else if("sender" in Message && "reciever" in Message && "reciever" in Message ) {
+        console.log("Notification hai");
+        setNotifications((prev)=>[...prev , Message])
+      }
+      else {
         console.error('Received data does not match expected format.');
       }
       
@@ -159,38 +212,58 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
 
   // const clearTasks
   
-  const onTaskRecievd = useCallback(
-    (Task: ITask) => {
-     
-      console.log(Math.ceil(Math.random()*1000));
-      
-      console.log("Task recieved from server", Task);
-
-    
-
-      // console.log(Message);
-      // console.log( "socket Provider messages ",Messages);
-      
-    },
-    [Socket]
-  );
+  
   
 
   useEffect(() => {
-    const _socket = io("http://localhost:3002");
-    _socket.on("RecivedMessage", onMessageRec);
-    // _socket.on("RecievedTask" , onTaskRecievd)
+    // const _socket = io("http://localhost:3002");
+    // _socket.on("RecivedMessage", onMessageRec);
+    // // _socket.on("RecievedTask" , onTaskRecievd)
 
-    setSocket(_socket);
+    
+
+    // setSocket(_socket);
+
+    const initializeSocket = async () => {
+      const _socket = io("http://localhost:3002");
+      _socket.on("RecivedMessage", onMessageRec);
+  
+      setSocket(_socket);
+  
+      // Join room immediately after socket is initialized
+     const res =  await joinRoom("notifcation ka liya");
+     console.log("notification" ,res);
+     
+    };
+  
+    initializeSocket();
+
+  
+   
+   
 
     return () => {
-      _socket.disconnect;
-      setSocket(undefined);
+      if (Socket) {
+        Socket.disconnect();
+        setSocket(undefined);
+      }
     };
   }, []);
 
+  useEffect(() => {
+    const joinRoomIfSocketInitialized = async () => {
+      if (Socket) {
+      if (userData) {
+        await joinRoom(`${userData.id}_${userData.name}`);
+      }
+      }
+    };
+
+    joinRoomIfSocketInitialized();
+  }, [Socket, joinRoom]);
+
   return (
-    <socketContext.Provider value={{ sendMessage, joinRoom, Messages  , clearMessages ,sendTask , Tasks}}>
+    <socketContext.Provider value={{ sendMessage, joinRoom, Messages  , clearMessages ,sendTask , Tasks  , sendNotifications , notifications}}>
       {children}
     </socketContext.Provider>
   );

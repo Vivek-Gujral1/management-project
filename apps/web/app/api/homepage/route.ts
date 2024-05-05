@@ -73,6 +73,7 @@ export async function GET(req: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session) {
     const posts = await getPosts();
+    let convertedPosts: Array<postInterface> = [];
     return NextResponse.json({
       message: "Home Page without login",
       posts: posts,

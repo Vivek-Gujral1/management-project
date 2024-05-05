@@ -21,6 +21,12 @@ interface user {
   id: string;
 }
 
+export interface INotification {
+  content: string;
+  sender: user;
+  reciever: user;
+}
+
 class SocketService {
   private _io: Server;
   private redisPubSub: RedisService;
@@ -69,6 +75,17 @@ class SocketService {
           });
         }
       );
+
+       
+      socket.on(
+        "sendNotification",
+        async (roomName: string, Notification: INotification, callback: Function) => {
+          await this.redisPubSub.publishNotificationToRoom(roomName, Notification);
+          callback({
+            status: true,
+          });
+        }
+      );
     });
 
     console.log("InIt Socket Listners");
@@ -85,10 +102,6 @@ class SocketService {
     // this.io.to(roomName).emit("userJoined" , socket.id , roomName)
     console.log(` socketid is  ${socket.id} joined room: ${roomName}`);
   }
-
-  // private async SendTask(  roomName : string) {
-  //  this.io.sockets.in(roomName).emit("TaskSend")
-  // }
 
   private async publish(roomName: string, message: message) {
     const res = await this.redisPubSub.publishToRoom(roomName, message);
