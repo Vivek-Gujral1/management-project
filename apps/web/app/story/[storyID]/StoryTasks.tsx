@@ -5,11 +5,14 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
 import { Button } from '../../../@/components/ui/button';
 import Link from 'next/link';
+import { useSocket } from '../../custom-Hooks/SocketProvider';
 
 function StoryTasks() {
   const story = useSelector((state : RootState)=> state.story.story)
   const user  = useSelector((state : RootState)=> state.auth.userData)
- 
+  const {Tasks} = useSocket() 
+  console.log(Tasks);
+  
   if (!user) {
     return <div>Please Login</div>
   }
@@ -27,8 +30,10 @@ function StoryTasks() {
       {story.manager?.id === user.id ?   <Link href="/task"><Button  size={'lg'} className='bg-green-500 lg:w-1/3 text-xl'> Send Task</Button></Link>  : null}
     
    
-        <div>
-        <TaskCard />
+        <div className=' flex flex-col gap-3'>
+        {Tasks.map((task)=>(
+          <TaskCard task={task}/>
+        ))}
         </div>
     </main>
   

@@ -11,7 +11,8 @@ export interface StoriesType {
 interface user  {
    name : string 
    avatar : string | null
-   id : string 
+   id : string  
+   
 }
 
 interface getStories {
@@ -20,12 +21,14 @@ interface getStories {
 }
 
 export interface StoryType {
-   employees : Array<user>
+   employees : Array<employess>
    manager   : user
    name   : string
    createdAt : Date
   org  : Array<org>
   bio  : string
+  id : string
+  socketRoomName : string
 }
 interface org {
 
@@ -38,6 +41,17 @@ interface ReturnTypeGetStory {
    message : string
    story : StoryType
 }
+interface employess  {
+   name : string 
+   avatar : string | null
+   id : string 
+   email:string
+}
+interface getEmployess{
+   message:string
+   employess:Array<employess>
+}
+
 
 
 export const getStory = async(storyId : string) => {
@@ -68,4 +82,8 @@ export const getStories = async () => {
 export const createStory = async(orgId:string,comingdata:TcreateStorySchema)=>{
    const {data} = await axios.post(`/api/org/story/createStory?orgId=${orgId}`,comingdata)
    return data
+}
+export const getStoryMembers = async(storyId:string)=>{
+   const {data} :{data:getEmployess} = await axios.get(`/api/org/story/get-employess-story?StoryID=${storyId}`)
+   return data.employess
 }

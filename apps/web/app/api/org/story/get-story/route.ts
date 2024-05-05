@@ -24,7 +24,8 @@ export async function GET(req : NextRequest) {
             select : {
                 name : true ,
                 avatar : true ,
-                id : true
+                id : true ,
+                email : true
             }
         } ,
         manager : {
@@ -44,7 +45,9 @@ export async function GET(req : NextRequest) {
         } ,
         name : true ,
         createdAt : true ,
-        bio : true
+        bio : true ,
+        id : true ,
+        socketRoomName : true
        }
     })
 
