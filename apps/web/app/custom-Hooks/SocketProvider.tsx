@@ -54,7 +54,7 @@ interface NotificationOrg {
 
 export interface AddEmployeeAcceptNotification extends INotification {
  org : NotificationOrg
- 
+
 }
 
 
@@ -170,7 +170,7 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
       return true;
     },
     [Socket]
-  );
+  ); 
 
   const onMessageRec = useCallback(
     (Message: message | ITask | INotification) => {

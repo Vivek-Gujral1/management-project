@@ -60,7 +60,7 @@ function  CreateStoryCard({orgID} : {orgID : string}) {
         name="name"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className=" text-white">email</FormLabel>
+            <FormLabel className=" text-white">Name</FormLabel>
             <FormControl>
               <Input placeholder="Enter Story Name" {...field} className=" h-10" />
             </FormControl>
@@ -77,7 +77,7 @@ function  CreateStoryCard({orgID} : {orgID : string}) {
         name="headline"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className=" text-white">Password</FormLabel>
+            <FormLabel className=" text-white">Headline</FormLabel>
             <FormControl>
               <Input placeholder="Enter Story Headline" {...field} className=" h-10" />
             </FormControl>
@@ -96,7 +96,7 @@ function  CreateStoryCard({orgID} : {orgID : string}) {
                   Please wait
                 </>
               ) : (
-                'Sign-In'
+                'Create Story'
               )}
             </Button>
     </form>

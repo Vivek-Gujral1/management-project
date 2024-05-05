@@ -4,10 +4,12 @@ import TaskCard from '../../../Components/TaskCard';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
 import { Button } from '../../../@/components/ui/button';
+import Link from 'next/link';
 
 function StoryTasks() {
   const story = useSelector((state : RootState)=> state.story.story)
   const user  = useSelector((state : RootState)=> state.auth.userData)
+ 
   if (!user) {
     return <div>Please Login</div>
   }
@@ -22,8 +24,9 @@ function StoryTasks() {
   return (
   
     <main className=' flex flex-col gap-3'>
-      {story.manager?.id === user.id ?   <Button size={'lg'} className='bg-green-500 lg:w-1/3 text-xl'> Send Task</Button> : null}
+      {story.manager?.id === user.id ?   <Link href="/task"><Button  size={'lg'} className='bg-green-500 lg:w-1/3 text-xl'> Send Task</Button></Link>  : null}
     
+   
         <div>
         <TaskCard />
         </div>

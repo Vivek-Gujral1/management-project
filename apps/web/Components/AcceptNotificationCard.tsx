@@ -12,6 +12,9 @@ const NotificationCard = ({ Notification } : {Notification : INotification}) => 
     }
     const onAccept = async() => {
        const res  =  await sendNotifications(`${Notification.sender.id}_${Notification.sender.name}`  ,  AcceptNotification)
+       if (res) {
+        
+       }
        setIsAccept(res)
     }
   return (
