@@ -9,6 +9,7 @@ import { inStory } from "../../../store/story/StorySlice";
 import { Button } from "../../../@/components/ui/button";
 import StoryGeneral from "./StoryGeneral";
 import StoryTasks from "./StoryTasks";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface FormValues {
   GeneralPage: boolean;
@@ -18,14 +19,16 @@ interface FormValues {
 function StoryLayout() {
   const [GeneralPage, setGeneralPage] = useState<boolean>(true);
   const [TasksPage, setTasksPage] = useState<boolean>(false);
+  const queryClient = useQueryClient()
 
-  const handleCheckboxChange = (name: keyof FormValues) => {
+  const handleCheckboxChange = async (name: keyof FormValues) => {
     if (name === "GeneralPage" && !GeneralPage) {
       setGeneralPage(true);
       setTasksPage(false);
     } else if (name === "TasksPage" && !TasksPage) {
       setGeneralPage(false);
       setTasksPage(true);
+      await queryClient.invalidateQueries({queryKey : ["tasks"]})
     }
   };
 

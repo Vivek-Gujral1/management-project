@@ -7,7 +7,7 @@ function Task({Task} : {Task : ITask }) {
    return (
    <div className=' h-[200px] w-full border border-white flex flex-col gap-4'>
      <div className='  h-1/5 border border-white flex flex-row items-center justify-center'>
-       <h1 className=' text-white text-lg'>Given To {Task.employee.name}</h1>
+       <h1 className=' text-white text-lg'>Given To {Task.sender.name}</h1>
      </div>
 
      <div className=' h-1/2 w-full'>
@@ -15,7 +15,7 @@ function Task({Task} : {Task : ITask }) {
      </div>
 
      <div className=' h-1/5 border border-white flex flex-row items-center justify-center'>
-       <h2 className=' mb-2 text-white text-lg'>Given By {Task.Manager.name}</h2>
+       <h2 className=' mb-2 text-white text-lg'>Given By {Task.sender.name}</h2>
      </div>
    </div>  
 )

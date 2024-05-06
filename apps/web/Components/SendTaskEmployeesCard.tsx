@@ -27,9 +27,9 @@ function SendTaskEmployeesCard({user} : {user : searchedItems} ) {
   const sendTaskToUser = async() => {
     const sendTaskType : ITask = {
       content : task?.content ,
-      employee : user ,
+      reciver : user ,
       title    : task?.title ,
-      Manager  : task.Manager
+      sender  : task.Manager
     }
    const res =  await sendTask(story.socketRoomName , sendTaskType)
    console.log("send task res" , res);
@@ -39,7 +39,7 @@ function SendTaskEmployeesCard({user} : {user : searchedItems} ) {
       content : sendTaskType.content,
       title   : sendTaskType.title
     }
-    const {data} = await axios.post(`/api/org/story/task/create-task?reciverID=${sendTaskType.employee.id}&storyID=${story.id}` , DatabaseTaskDetails)
+    const {data} = await axios.post(`/api/org/story/task/create-task?reciverID=${sendTaskType.reciver.id}&storyID=${story.id}` , DatabaseTaskDetails)
     console.log("axios data" , data);
     
    }

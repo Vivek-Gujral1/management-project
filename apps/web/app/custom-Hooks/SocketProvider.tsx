@@ -34,9 +34,9 @@ interface user {
 
 export interface ITask{
   content:string,
-  Manager:user,
+  sender:user,
   // LastDate:Date,
-  employee:user,
+  reciver:user,
   title:string
 }
 
@@ -189,7 +189,7 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
         // Object is of type Message
         // this.io.emit('message', parsedData as message);
         setMessages((prev) => [...prev, Message]);
-      } else if ('content' in Message && 'title' in Message && 'Manager' in Message && 'employee' in Message) {
+      } else if ('content' in Message && 'title' in Message && 'sender' in Message && 'reciver' in Message) {
         // Object is of type Task
         console.log("task hai");
         setTasks((prev) => [...prev, Message]);

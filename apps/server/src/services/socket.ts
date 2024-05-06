@@ -4,9 +4,9 @@ import { RedisService } from "./redis";
 
 export interface Task {
   content: string;
-  Manager: user;
+  sender: user;
   // LastDate: Date;
-  employee: user;
+  reciever: user;
   title: string;
 }
 
