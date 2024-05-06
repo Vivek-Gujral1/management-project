@@ -80,18 +80,36 @@ export async function POST(req:NextRequest) {
                     id : story.id
                 }
             }
-        } ,
-        include : {
-            sender : true ,
-            story : true ,
-            reciver : true
-        }
+        } 
+    
+       
     })
 
 
     const createdTask = await prisma.task.findFirst({
         where :{
             id : newTask.id
+        } , 
+        select : {
+            content : true ,
+            sender : {
+                select  : {
+                    avatar : true ,
+                    id   : true ,
+                    email : true ,
+                    name : true
+                }
+            } ,
+            title : true ,
+            reciver : {
+                select : {
+                     avatar : true ,
+                     name : true ,
+                     id : true ,
+                     email : true
+                }
+            } , 
+            id : true
         }
     })
 
@@ -99,22 +117,13 @@ export async function POST(req:NextRequest) {
         throw new ApiError(500 , "error while creating a task")
     }
 
-    const socketRoomName = `${createdTask.id}_reciver_${reciver.id}`
-  
-    const InsertSocketRoomName  = await prisma.task.update({
-        where : {
-            id : createdTask.id
-        } ,
-        data : {
-            TaskSocketRoomName : socketRoomName
-        }
-    })  
+   
 
     
 
     return NextResponse.json({
         message : "task created Successfully",
-        task : InsertSocketRoomName
+        task : createdTask
     })
 
 }

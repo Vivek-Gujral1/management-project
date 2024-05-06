@@ -13,6 +13,15 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import axios from "axios";
 
+ interface DatabaseTask extends ITask {
+  id : string
+ }
+
+ interface TaskAxiosReturnType {
+  message : string 
+  task : DatabaseTask
+ }
+
 function SendTaskEmployeesCard({ user }: { user: searchedItems }) {
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -38,37 +47,49 @@ function SendTaskEmployeesCard({ user }: { user: searchedItems }) {
     console.log("send task res", res);
 
     if (res) {
-      const Notification: INotification = {
-        content: `${sendTaskType.sender.name} just Gave you a Task`,
-        reciever: {
-          avatar: sendTaskType.reciver.avatar,
-          id: sendTaskType.reciver.id,
-          name: sendTaskType.reciver.name,
-        },
-        sender: {
-          avatar: `${sendTaskType.sender.avatar}`,
-          id: `${sendTaskType.sender.id}`,
-          name: `${sendTaskType.sender.name}`,
-        },
-      };
-      const sendNotificationRoomName = `${sendTaskType.reciver.id}_${sendTaskType.reciver.name}`;
-      console.log("roomName");
-      
-      const notificationRes = await sendNotifications(
-        sendNotificationRoomName,
-        Notification
-      );
-      console.log("Notificationres", notificationRes);
 
       const DatabaseTaskDetails = {
         content: sendTaskType.content,
         title: sendTaskType.title,
       };
-      const { data } = await axios.post(
+      const { data } : {data : TaskAxiosReturnType} = await axios.post(
         `/api/org/story/task/create-task?reciverID=${sendTaskType.reciver.id}&storyID=${story.id}`,
         DatabaseTaskDetails
       );
       console.log("axios data", data);
+
+      if (data.task) {
+        const Notification: INotification = {
+          content: `${data.task.sender.name} just Gave you a Task`,
+          reciever: {
+            avatar: data.task.reciver.avatar,
+            id: data.task.reciver.id,
+            name: data.task.reciver.name,
+          },
+          sender: {
+            avatar: `${data.task.sender.avatar}`,
+            id: `${data.task.sender.id}`,
+            name: `${data.task.sender.name}`,
+          },
+        };
+        const sendNotificationRoomName = `${data.task.reciver.id}_${data.task.reciver.name}`;
+        console.log("roomName");
+        
+        const notificationRes = await sendNotifications(
+          sendNotificationRoomName,
+          Notification
+        );
+        if (notificationRes) {
+         const axiosNotification = await axios.post(`/api/notifications/task-notification?taskID=${data.task.id}&recieverID=${data.task.reciver.id}` , {
+            content : Notification.content
+          })
+
+          console.log("axios notification " , axiosNotification);
+          
+        }
+      }
+
+     
     }
   };
 

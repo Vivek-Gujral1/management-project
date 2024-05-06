@@ -95,7 +95,7 @@ model Task {
   sender             User?    @relation("TaskSender", fields: [senderId], references: [id])
   reciverId          String   @db.ObjectId
   reciver            User?    @relation("taskReciver", fields: [reciverId], references: [id])
-  TaskSocketRoomName String?
+
   NotificationTask Notification[]
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
