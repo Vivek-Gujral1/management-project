@@ -96,6 +96,7 @@ model Task {
   reciverId          String   @db.ObjectId
   reciver            User?    @relation("taskReciver", fields: [reciverId], references: [id])
   TaskSocketRoomName String?
+  NotificationTask Notification[]
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
 
@@ -185,13 +186,14 @@ model Notification {
   reciever User @relation(fields: [recieverID] , references: [id])
   content String
   createdAt DateTime @default(now())
-  postID   String @db.ObjectId
+  postID   String? @db.ObjectId
   post     Post? @relation(fields: [postID] , references: [id])
-  OrgID   String @db.ObjectId
+  OrgID   String? @db.ObjectId
   Org     Org? @relation(fields: [OrgID] , references: [id])
-  StoryID  String @db.ObjectId
+  StoryID  String? @db.ObjectId
   Story    Story? @relation(fields: [StoryID] , references: [id]) 
-  
+  TaskID   String? @db.ObjectId
+  Task     Task?  @relation(fields: [TaskID] , references: [id])
 
   @@map("notifications")
 }

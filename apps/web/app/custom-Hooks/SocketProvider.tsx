@@ -59,15 +59,18 @@ export interface AddEmployeeAcceptNotification extends INotification {
 
 
 
+
+
 interface IsocketContext {
   sendMessage: (roomName: string, Message: message) => Promise<boolean>;
   joinRoom: (roomName: string) => Promise<boolean>;
   Messages: Array<message>;
-  clearMessages: () => void; // Function to clear messages
+  clearMessages: () => void; 
   sendTask:(roomName:string,Task:ITask)=> Promise<boolean>;
   Tasks : Array<ITask>
   notifications : Array<INotification>
   sendNotifications:(roomName : string , Notification : INotification) => Promise<boolean>
+  clearTasks: () => void; 
 }
 
 const socketContext = React.createContext<IsocketContext | null>(null);
@@ -123,6 +126,7 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
     },[Socket]
   )
 
+
   const sendMessage: IsocketContext["sendMessage"] = useCallback(
     async (roomName: string, Message: message) => {
       const res: RoomAcknowledgeMent = await Socket?.emitWithAck(
@@ -162,10 +166,7 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
       if (res.status === false) {
         return false;
       }
-      const create = await axios.post(`/api/notifications/create-notification?recieverID=${Notification.reciever.id}` , {
-                content : Notification.content
-              })
-      console.log(create);
+      
 
       return true;
     },
@@ -210,20 +211,15 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
     setMessages([]); // Clearing messages array
   }, []);
 
-  // const clearTasks
+  const clearTasks : IsocketContext["clearTasks"] = useCallback(() => {
+    setTasks([]); // Clearing messages array
+  }, []);
+ 
   
   
   
 
   useEffect(() => {
-    // const _socket = io("http://localhost:3002");
-    // _socket.on("RecivedMessage", onMessageRec);
-    // // _socket.on("RecievedTask" , onTaskRecievd)
-
-    
-
-    // setSocket(_socket);
-
     const initializeSocket = async () => {
       const _socket = io("http://localhost:3002");
       _socket.on("RecivedMessage", onMessageRec);
@@ -263,7 +259,7 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
   }, [Socket, joinRoom]);
 
   return (
-    <socketContext.Provider value={{ sendMessage, joinRoom, Messages  , clearMessages ,sendTask , Tasks  , sendNotifications , notifications}}>
+    <socketContext.Provider value={{  clearTasks,sendMessage, joinRoom, Messages  , clearMessages ,sendTask , Tasks  , sendNotifications , notifications}}>
       {children}
     </socketContext.Provider>
   );

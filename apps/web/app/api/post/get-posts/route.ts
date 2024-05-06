@@ -25,7 +25,7 @@ export interface Comments {
 interface user {
   name: string;
   avatar: string | null;
-
+  id : string
 }
 export interface likes {
   likedBy: user;
@@ -82,7 +82,8 @@ const fetchFriendPost = async (friendID: string): Promise<Array<postType>> => {
             likedBy : {
                 select : {
                     name : true ,
-                    avatar : true
+                    avatar : true,
+                    id : true
                 }
             }
         }
@@ -126,7 +127,8 @@ const fetchOrgPost = async (orgID: string) => {
             likedBy : {
                 select : {
                     name : true ,
-                    avatar : true
+                    avatar : true ,
+                    id : true
                 }
             }
         }
@@ -215,7 +217,8 @@ const fetchposts = async() => {
             likedBy : {
                 select : {
                     name : true ,
-                    avatar : true
+                    avatar : true  ,
+                    id : true
                 }
             }
         }
