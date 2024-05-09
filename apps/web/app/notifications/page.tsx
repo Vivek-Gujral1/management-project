@@ -5,37 +5,40 @@ import React from 'react'
 import { getNotifications } from '../../constants/Notifications'
 import { useSocket } from '../custom-Hooks/SocketProvider'
 import NotificationCard from '../../Components/AcceptNotificationCard'
+import Notification from '../../Components/Notification'
 
 function page() {
   const {notifications} = useSocket()
     
-    const {data , isLoading} = useQuery({
+    const {data : backendNotification, isLoading} = useQuery({
         queryKey : ["notifications"] ,
         queryFn : async ()=> await getNotifications()
     })
     if (isLoading) {
         return <div>Notifications Loading</div>
     }
-    if (!data) {
+    if (!backendNotification) {
         return <div>error while fetching notifications</div>
     }
-    console.log(data);
+    console.log(backendNotification);
     
+   
   return (
-    <main>
-    <div>
-        {data.status ? 
-          data.notifications.map((notification)=>(
-            <h1>{notification.content}</h1>
+    <main className=' flex flex-col-reverse'>
+    <div className=' flex flex-col-reverse'>
+        {backendNotification.status ? 
+          backendNotification.notifications.map((notification)=>(
+           <Notification Notification={notification} />
           ))
         : <div>There is not any notifications</div> }
     </div>
-    <div>
+    <div className=' flex flex-col-reverse'>
       {notifications.map((notification)=>(
-        <NotificationCard Notification={notification} />
+        <Notification Notification={notification} />
       ))}
     </div>
     </main>
+    
   )
 }
 

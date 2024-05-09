@@ -5,9 +5,13 @@ import { RootState } from '../../../store/store'
 
 function StoryGeneral() {
   const story = useSelector((state:RootState)=>state.story.story)
+  const userData = useSelector((state : RootState)=>state.auth.userData)
   if (!story) {
     return <div>something Went Wrong</div>
     
+  }
+  if (!userData) {
+    return <h1>Please Login</h1>
   }
   const org = story.org[0]
   const group = {
@@ -34,7 +38,7 @@ function StoryGeneral() {
           <span className="text-sm">{group.name}</span>
         </div> */}
       </div>
-      <button className="px-4 py-2 bg-gray-600 rounded">Leave Story</button>
+     {userData.id === story.manager.id ?   <button className="px-4 py-2 bg-gray-600 rounded">Add Memeber</button> : null }
     </header>
     {/* <div className="mb-4">
       <img src={group.coverImage} alt="Group Cover" className="w-full rounded-lg" />

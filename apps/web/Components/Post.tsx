@@ -27,39 +27,45 @@ function Post({ postData }: { postData: postInterface }) {
   };
 
   const togglelike = async () => {
-    const likeStatus = await toggleLike(postData.post.id);
-    console.log("like Status", likeStatus);
-    if (likeStatus !== null) {
-      setIsLiked(likeStatus);
-      if (likeStatus) {
-        if (userData) {
-          const notificationRoomName = `${postData.post.postOwner.id}_${postData.post.postOwner.name}`;
-          const Notification: INotification = {
-            content: `${userData.name} just liked Your Post`,
-            reciever: {
-              avatar: postData.post.postOwner.avatar,
-              id: postData.post.postOwner.id,
-              name: postData.post.postOwner.name,
-            },
-            sender: {
-              avatar: userData.avatar,
-              id: userData.id,
-              name: userData.name,
-            },
-          };
-          const createNotification = await sendNotifications(
-            notificationRoomName,
-            Notification
-          );
-          if (createNotification) {
-            const create =  await axios.post(`/api/notifications/post-notification?postID=${postData.post.id}&recieverID=${Notification.reciever.id}` , {
-              content : Notification.content
-             })
-             console.log("create Notification axios data" , create);
-             
+    if (userData) {
+      const likeStatus = await toggleLike(postData.post.id);
+      console.log("like Status", likeStatus);
+      if (likeStatus !== null) {
+        setIsLiked(likeStatus);
+        if (likeStatus) {
+          if (userData) {
+            const notificationRoomName = `${postData.post.postOwner.id}_${postData.post.postOwner.name}`;
+            const Notification: INotification = {
+              content: `${userData.name} just liked Your Post`,
+              reciever: {
+                avatar: postData.post.postOwner.avatar,
+                id: postData.post.postOwner.id,
+                name: postData.post.postOwner.name,
+              },
+              sender: {
+                avatar: userData.avatar,
+                id: userData.id,
+                name: userData.name,
+              },
+            };
+            const createNotification = await sendNotifications(
+              notificationRoomName,
+              Notification
+            );
+            if (createNotification) {
+              const create =  await axios.post(`/api/notifications/post-notification?postID=${postData.post.id}&recieverID=${Notification.reciever.id}` , {
+                content : Notification.content
+               })
+               console.log("create Notification axios data" , create);
+               
+            }
           }
         }
       }
+    }
+    else {
+      console.log("please login to like");
+      
     }
   };
 

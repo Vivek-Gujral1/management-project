@@ -1,31 +1,13 @@
 import axios from "axios"
 import { postInterface, postType } from "../app/api/post/get-posts/route"
+import { ITask } from "../app/custom-Hooks/SocketProvider"
 
-export interface HomePageTask {
-    story : taskStory 
-    isCompleted : boolean
-    sender : sender ,
-    title : string ,
-    content : string ,
-    createdAt : Date
-  }
-  
-  interface taskStory {
-    socketRoomName : string ,
-      name : string ,
-  }
 
-    
-  interface sender {
-    avatar : string | null 
-    name : string ,
-    id : string
-  }
   
  interface ReturnTypeHomePage {
     message : string 
     posts   : Array<postInterface>
-    tasks   : null | Array<HomePageTask>
+    tasks   : null | Array<ITask>
  } 
 
 export const getHomePage =  async() => {

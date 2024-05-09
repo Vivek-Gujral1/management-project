@@ -20,6 +20,7 @@ const getPosts = async () => {
             select: {
               name: true,
               avatar: true,
+              id : true
             },
           },
         },
@@ -69,14 +70,41 @@ const convertPost = async (
   return convertPost(posts, index + 1, convertedPosts, userID);
 };
 
+const convertPostWithoutLogin = async( posts: Array<postType>,
+  index: number,
+  convertedPosts: Array<postInterface>,) : Promise<Array<postInterface>> => {
+    if (index >= posts.length) {
+      return convertedPosts;
+    }
+    if (!posts) {
+      return convertedPosts;
+    }
+
+    const currentPost  = posts[index]
+
+    if (currentPost && currentPost.id) {
+      const postConvert: postInterface = {
+        isLiked: null,
+        post: currentPost,
+        postLikes: currentPost.likes.length,
+      };
+      convertedPosts = [...convertedPosts, postConvert];
+    }
+
+    return convertPostWithoutLogin(posts , index + 1 , convertedPosts)
+}
+
 export async function GET(req: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session) {
     const posts = await getPosts();
     let convertedPosts: Array<postInterface> = [];
+
+    const postsConvert = await convertPostWithoutLogin(posts , 0 , convertedPosts )
+
     return NextResponse.json({
       message: "Home Page without login",
-      posts: posts,
+      posts: postsConvert,
       tasks: null,
     });
   } else {
@@ -85,29 +113,30 @@ export async function GET(req: NextRequest) {
       where: {
         reciverId: user.id,
       },
-      take: 3,
+      take: 2,
       orderBy: {
         createdAt: "desc",
       },
-      select: {
-        story: {
-          select: {
-            socketRoomName: true,
-            name: true,
-          },
-        },
-        isCompleted: true,
-        sender: {
-          select: {
-            avatar: true,
-            name: true,
-            id: true,
-          },
-        },
-        title: true,
-        content: true,
-        createdAt: true,
-      },
+      select : {
+        content : true ,
+        title : true ,
+        reciver : {
+            select : {
+                name : true ,
+                avatar : true ,
+                email : true ,
+                id : true
+            }
+        } ,
+        sender : {
+            select : {
+                avatar : true  ,
+                name : true ,
+                email : true ,
+                id : true
+            }
+        }
+    }
     });
     const posts = await getPosts();
 

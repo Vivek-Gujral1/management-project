@@ -34,7 +34,7 @@ export interface likes {
 
 export interface postInterface {
   post : postType
-  isLiked : boolean
+  isLiked : boolean | null
   postLikes : number 
 }
 

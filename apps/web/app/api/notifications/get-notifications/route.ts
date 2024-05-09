@@ -14,6 +14,28 @@ export async function GET(req: NextRequest) {
     where: {
       recieverID: user.id,
     },
+    orderBy : {
+      createdAt : "desc"
+    } ,
+    select : {
+      content : true ,
+      sender : {
+        select : {
+          name : true ,
+          avatar : true ,
+          id : true
+        } ,
+        
+
+      } ,
+      reciever : {
+        select : {
+          name : true ,
+          avatar : true ,
+          id : true
+        }
+      }
+    }
   });
 
   if (!notifications) {

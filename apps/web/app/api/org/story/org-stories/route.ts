@@ -22,7 +22,7 @@ export async function GET(req : NextRequest) {
             } ,
            {
             employees : {
-                every : {
+                some : {
                     id : user.id
                 }
             }
@@ -40,7 +40,11 @@ export async function GET(req : NextRequest) {
             }
         } ,
         bio : true
-    }
+    } ,
+    orderBy : {
+        createdAt : "desc"
+    } ,
+
    })
 
 

@@ -1,10 +1,11 @@
-import { Notification } from "@prisma/client"
+
 import axios from "axios"
+import { INotification } from "../app/custom-Hooks/SocketProvider"
 
 
 interface RetunTypeGetNotifications {
     messaeg : string 
-    notifications :   Array<Notification>
+    notifications :   Array<INotification>
     status : boolean
 }
 

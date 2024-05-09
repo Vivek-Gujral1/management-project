@@ -32,7 +32,7 @@ function page() {
       <Button onClick={()=> router.push("/posts/create-post")} className=' bg-white lg:w-1/3 lg:text-xl'> Create Post </Button>
     {/* {data.posts.map((post)=> <Post  postData={post} key={post.post.id} ></Post>)} */}
 
-    <div className=" flex flex-col gap-4 lg:grid lg:grid-cols-2 lg:gap-5">
+    <div className=" flex flex-col gap-4 lg:grid lg:grid-cols-3 lg:gap-5">
         {data?.posts.map((post) => <Post postData={post}></Post>)}
       </div>
     </main>
