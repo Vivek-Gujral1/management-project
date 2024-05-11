@@ -10,6 +10,7 @@ import { Button } from "../../../@/components/ui/button";
 import StoryGeneral from "./StoryGeneral";
 import StoryTasks from "./StoryTasks";
 import { useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 interface FormValues {
   GeneralPage: boolean;
@@ -17,6 +18,8 @@ interface FormValues {
 }
 
 function StoryLayout() {
+   const router = useRouter()
+
   const [GeneralPage, setGeneralPage] = useState<boolean>(true);
   const [TasksPage, setTasksPage] = useState<boolean>(false);
   const queryClient = useQueryClient()
@@ -36,6 +39,12 @@ function StoryLayout() {
   const storyID = useSelector((state: RootState) => state.storyID.storyID);
   if (!storyID) {
     return <div>Soemthing went wrong</div>;
+  }
+
+  const pushtostoryChat = (storyID:string)=>{
+   
+     router.push(`/message/story/${storyID}`)
+
   }
 
   const { data: FetchStory, isLoading } = useQuery({
@@ -68,7 +77,7 @@ function StoryLayout() {
         >
           Tasks
         </Button>
-        <Button className={`text-white  `}>Chat</Button>
+        <Button   className={`text-white  `}>Chat</Button>
       </div>
 
       <div>

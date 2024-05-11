@@ -11,6 +11,7 @@ import querySlice from "./query/querySlice";
 import postslice from "./postSlice/postslice";
 import storyID from "./storyID/storyIDSlice";
 import storyIdSLice from "./storyID/storyIDSlice"
+import MessageStorySlice from "./MessageStory/slice";
 
 
 const createNoopStorage = () => {
@@ -47,7 +48,8 @@ export default storage;
   friend : friendSlice ,
   query : querySlice ,
   post : postslice ,
-  storyID : storyIdSLice
+  storyID : storyIdSLice ,
+  storyMEssage : MessageStorySlice
 })
 
 

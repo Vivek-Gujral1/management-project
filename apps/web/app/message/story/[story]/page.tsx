@@ -19,21 +19,21 @@ function page() {
   const { register, handleSubmit, reset } = useForm<dataTYpe>();
   const { sendMessage, Messages } = useSocket();
 
-  const org = useSelector((state: RootState) => state.org.org);
+  const story = useSelector((state: RootState) => state.storyMEssage.story);
   const { data } = useSession();
   if (!data) {
     return <div>please Login</div>;
   }
   const user = data.user;
-  if (!org) {
-    return <div>org nahi hai</div>;
+  if (!story) {
+    return <div>story nahi hai</div>;
   }
 
  
 
   const { data: backendMessages, isLoading } = useQuery({
-    queryKey: ["orgMessages"],
-    queryFn: async () => await getMessages(org.socketRoomName),
+    queryKey: ["storyMessages"],
+    queryFn: async () => await getMessages(story.socketRoomName),
   });
 
   if (isLoading) {
@@ -54,10 +54,10 @@ function page() {
         id: user.id,
         name: user.name,
       },
-      roomName: org.socketRoomName,
+      roomName: story.socketRoomName,
     };
 
-    await sendMessage(org.socketRoomName, message);
+    await sendMessage(story.socketRoomName, message);
     reset();
   };
 
@@ -74,7 +74,7 @@ function page() {
     <div className=" h-[520px] w-full  flex flex-col gap-4 mr-5">
       <div className=" h-14 w-full border border-white flex flex-row justify-center items-center">
         <h1 className=" text-3xl text-white ">
-              {org.name}
+              {story.name}
         </h1>
       </div>
 

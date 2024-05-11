@@ -6,7 +6,8 @@ export interface StoriesType {
    name : string ,
    socketRoomName : string  
    manager : user
-   bio : string 
+   bio : string  ,
+
 }
 interface user  {
    name : string 

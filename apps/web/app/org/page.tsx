@@ -66,13 +66,15 @@ function page() {
 
   return (
     <div className=" ">
-      <div className="flex flex-row justify-center mr-52">
-        <Button
+       <Button 
+       className="text-white"
           variant="outlined"
           color="inherit"
           children="Create Organization"
           onClick={() => router.push("/org/create-org")}
         ></Button>
+      <div className="flex flex-row text-white justify-center mr-52">
+       
       </div>
       {orgs?.map((org: ORGExtends) => (
         <div className=" group hover:border-blue-600 ">
@@ -86,10 +88,10 @@ function page() {
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
             </div>
-            <div className=" mt-8 ml-6">
+            <div className=" mt-8 text-white ml-6">
               <h1 className=" text-xl">{org.name}</h1>
 
-              <p className=" text-slate-600">{org.headline}</p>
+              <p className=" text-slate-600 text-white">{org.headline}</p>
               <div className=" mt-2 flex flex-row justify-start">
                 <AvatarGroup max={org.employeeID.length}>
                   <MaterialAvatar src="https://github.com/shadcn.png" />

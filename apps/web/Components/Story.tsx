@@ -32,10 +32,7 @@ function Story({story} : {story : StoriesType}) {
     <div className=' h-[300px] w-full border border-white flex flex-col gap-3 bg-slate-200 lg:h-[220px]'>
      <div className=' h-1/6 flex flex-row gap-4  items-center'>
        <div className=' ml-4 mt-4'>
-       <Avatar  className=' border border-black flex flex-row justify-center items-center'>
-        <AvatarImage   src={story.avatar ? story.avatar: ""}> </AvatarImage>
-        <AvatarFallback className=''>CN</AvatarFallback>
-       </Avatar>
+      
        </div>
       
         <div className=' flex flex-col '>
@@ -50,7 +47,7 @@ function Story({story} : {story : StoriesType}) {
       </div>
 
       <div className=' h-1/5 w-full ml-4'>
-        <p className=' text-slate-600'>This Story is made for real team workers and in this story weh have 1000 plus workers</p>
+        <p className=' text-slate-600'>{story.bio}</p>
       </div>
 
       <div className=' h-1/5 flex flex-row items-center justify-start ml-2 mt-12 lg:mt-2'>
@@ -61,7 +58,7 @@ function Story({story} : {story : StoriesType}) {
                   <MaterialAvatar src="https://github.com/shadcn.png" />
 
                 </AvatarGroup> 
-        <p className=' text-slate-700'>1221 Team Members working...</p>
+        <p className=' text-slate-700'> Team Members working...</p>
       </div>
      </div>
 

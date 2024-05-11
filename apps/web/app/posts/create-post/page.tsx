@@ -44,7 +44,7 @@ const ImageUploadComponent: React.FC = () => {
       formData.append('post', imageFile); // Append the image file to FormData
       
       const res = await axios.post(
-        `/api/post/create-post?orgID=65fba7ef90dfb092289923fd`,
+        `/api/post/create-post`,
         formData,
         {
           headers: {

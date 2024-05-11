@@ -67,13 +67,13 @@ function page() {
   return ( 
     <>
       <div>
-        <h1 className=" pt-8 text-4xl text-slate-600">
+        <h1 className=" pt-8 text-4xl text-slate-300">
          {data ? "Organization Created Successfully" : "Make Your Own Organization"}
         </h1>
         <div className="  h-96 w-2/5 mt-8">
           <form onSubmit={handleSubmit(create)}>
             <div className=" flex flex-col gap-4 ">
-              <label htmlFor="name">Name</label>
+              <label className=" text-white" htmlFor="name">Name</label>
               <Input
                 className=" pl-6 h-12"
                 {...register("name")}
@@ -83,7 +83,7 @@ function page() {
                 disabled = {data ? true : false}
               />
 
-              <label htmlFor="email">Email</label>
+              <label className=" text-white" htmlFor="email">Email</label>
               <Input
                 className=" pl-6 h-12"
                 {...register("email")}
@@ -94,7 +94,7 @@ function page() {
               />
 
               {/* <Button  color="inherit" variant="outlined" size="large" children={isPending ? "Creating" : "Create Organization"}/> */}
-             {data ? <button onClick={()=> visit(data.org)}>Visit Organization</button> :  <button>{isPending ? "CREATING" : "CREATE ORGANIZATION"}</button> }
+             {data ? <button className=" text-white" onClick={()=> visit(data.org)}>Visit Organization</button> :  <button className=" text-white">{isPending ? "CREATING" : "CREATE ORGANIZATION"}</button> }
             </div>
           </form>
         </div>

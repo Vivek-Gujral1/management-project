@@ -18,7 +18,8 @@ function page() {
         
     }
   return (
-    <main>
+    <main className=' flex flex-col gap-4 '>
+        <h2 className=' text-white text-2xl ml-80'>Select Organisation to Create Story</h2>
         {data.orgs.map((org)=>(
             <SeletcOrg org={org} />
         ))}
